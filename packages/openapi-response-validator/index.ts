@@ -162,8 +162,11 @@ function getSchemas(responses, definitions, components) {
 
   Object.keys(responses).forEach(name => {
     const response = responses[name];
+
     const schema = response
-      ? typeof response.schema === 'object'
+      ? typeof response.$ref === 'string'
+        ? response
+        : typeof response.schema === 'object'
         ? response.schema
         : typeof response.content === 'object' &&
           typeof response.content[Object.keys(response.content)[0]] ===
